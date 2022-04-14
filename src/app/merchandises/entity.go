@@ -22,7 +22,7 @@ type MerchandiseTypeReference struct {
 	Name string
 }
 
-type Business interface {
+type Services interface {
 	CreateData(data Domain) (Domain, error)
 	GetAllData() []Domain
 }
