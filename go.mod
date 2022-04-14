@@ -2,7 +2,10 @@ module merchandise-circulation-api
 
 go 1.17
 
-require github.com/labstack/echo/v4 v4.7.2
+require (
+	github.com/labstack/echo/v4 v4.7.2
+	github.com/google/uuid v1.3.0
+)
 
 require (
 	github.com/ajg/form v1.5.1 // indirect
