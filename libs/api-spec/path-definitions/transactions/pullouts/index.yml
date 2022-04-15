@@ -1,0 +1,22 @@
+get:
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../../../schemas/Transaction.yml#/TypeSpecificTransaction
+    '500':
+      description: Server Error
+
+post:
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: ../../../schemas/Transaction.yml#/PulloutTransactionInput

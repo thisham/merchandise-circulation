@@ -1,0 +1,35 @@
+get:
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: ../../schemas/Merchandise.yml#/Merchandise
+
+put:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../../schemas/Merchandise.yml#/MerchandiseInput
+  responses:
+    '204':
+      description: No Content
+    '400':
+      description: Request Error
+    '404':
+      description: Not Found
+    '500':
+      description: Server Error
+
+delete:
+  responses:
+    '204':
+      description: No Content
+    '400':
+      description: Request Error
+    '404':
+      description: Not Found
+    '500':
+      description: Server Error

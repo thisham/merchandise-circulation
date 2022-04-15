@@ -1,0 +1,27 @@
+post:
+  parameters:
+    - in: body
+      name: email
+      required: true
+      schema: 
+        type: string
+        example: yehezkielsr@example.com
+    - in: body
+      name: password
+      required: true
+      schema: 
+        type: string
+        example: example123!
+  responses:
+    '200': 
+      description: "authenticated"
+      content:
+        application/json:
+          schema:
+            type: string
+            description: "jwt"
+            example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+    '400':
+      description: "invalid input"
+    '500':
+      description: "server error"

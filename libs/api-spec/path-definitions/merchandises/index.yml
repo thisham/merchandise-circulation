@@ -1,0 +1,18 @@
+get:
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items: 
+              $ref: ../../schemas/Merchandise.yml#/Merchandise
+
+post:
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../../schemas/Merchandise.yml#/MerchandiseInput

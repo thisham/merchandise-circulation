@@ -1,0 +1,27 @@
+get:
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../../schemas/User.yml#/User
+    '500':
+      description: Server Error
+
+post:
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../../schemas/User.yml#/UserInput
+  responses:
+    '204':
+      description: No Content
+    '400':
+      description: Request Failed
+    '500':
+      description: Server Error

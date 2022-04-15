@@ -1,0 +1,30 @@
+openapi: '3.0.2'
+info:
+  title: GORM MVC API
+  version: '1.0'
+servers:
+  - url: https://api.server.test/v1
+    description: Example Mock Server
+  - url: http://localhost:4010
+    description: Local Mock Server by Prism
+paths:
+  /users:
+    $ref: 'path-definitions/users/index.yml'
+  /users/:id:
+    $ref: 'path-definitions/users/{user_id}.yml'
+  /merchandises:
+    $ref: 'path-definitions/merchandises/index.yml'
+  /merchandises/:id:
+    $ref: 'path-definitions/merchandises/{merchandise_id}.yml'
+  /transactions:
+    $ref: 'path-definitions/transactions/index.yml'
+  /transactions/arrivals:
+    $ref: 'path-definitions/transactions/arrivals/index.yml'
+  /transactions/arrivals/:id:
+    $ref: 'path-definitions/transactions/arrivals/{transaction_id}.yml'
+  /transactions/pullouts:
+    $ref: 'path-definitions/transactions/pullouts/index.yml'
+  /transactions/pullouts/:id:
+    $ref: 'path-definitions/transactions/pullouts/{transaction_id}.yml'
+  /login:
+    $ref: 'path-definitions/login.yml'

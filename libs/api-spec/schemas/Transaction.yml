@@ -1,0 +1,95 @@
+Transaction:
+  type: object
+  properties:
+    id:
+      type: string
+      example: abd121e8-dumm-dumm-tran-dummycreated
+    type:
+      type: string
+      example: arrival
+    total_quantity:
+      type: number
+      example: 12
+    total_price:
+      type: number
+      example: 120000000
+    created_at:
+      type: date
+      example: 2022-08-10 22:22:20
+    updated_at:
+      type: date
+      example: 2022-08-10 22:22:20
+
+TransactionDetail:
+  type: object
+  properties:
+    id:
+      type: string
+      example: abd121e8-dumm-dumm-tran-dummycreated
+    type:
+      type: string
+      example: arrival
+    total_quantity:
+      type: number
+      example: 12
+    total_price:
+      type: number
+      example: 120000000
+    created_at:
+      type: date
+      example: 2022-08-10 22:22:20
+    updated_at:
+      type: date
+      example: 2022-08-10 22:22:20
+    merchandise:
+      type: array
+      items:
+        $ref: "#/MerchandiseOnTransactionDetail"
+
+MerchandiseOnTransactionDetail:
+  type: object
+  properties:
+    universal_product_code:
+      type: string
+      example: "195697617089"
+    name: 
+      type: string
+      example: "HP 14 Series 14\" Touchscreen Laptop AMD Ryzen 3-3250U 8GB RAM 256GB SSD Natural Silver - AMD Ryzen 3-3250U Dual-core - Integrated AMD Radeon Graphics"
+    quantity:
+      type: number
+      example: 12
+    price:
+      type: float
+      example: 120000000
+    merchandise_type:
+      type: string
+      example: "Electronics" 
+
+TypeSpecificTransaction:
+  type: object
+  properties:
+    id:
+      type: string
+      example: abd121e8-dumm-dumm-tran-dummycreated
+    total_quantity:
+      type: number
+      example: 12
+    total_price:
+      type: number
+      example: 120000000
+    created_at:
+      type: date
+      example: 2022-08-10 22:22:20
+    updated_at:
+      type: date
+      example: 2022-08-10 22:22:20
+
+PulloutTransactionInput:
+  type: object
+  properties:
+    universal_product_code:
+      type: string
+      example: "195697617089"
+    quantity:
+      type: number
+      example: 12

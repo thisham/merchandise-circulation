@@ -1,0 +1,46 @@
+Merchandise:
+  type: object
+  properties:
+    id: 
+      type: number
+      example: 1
+    universal_product_code:
+      type: string
+      example: "195697617089"
+    name: 
+      type: string
+      example: "HP 14 Series 14\" Touchscreen Laptop AMD Ryzen 3-3250U 8GB RAM 256GB SSD Natural Silver - AMD Ryzen 3-3250U Dual-core - Integrated AMD Radeon Graphics"
+    stock:
+      type: number
+      example: 12
+    price:
+      type: number
+      example: 12000000
+    description:
+      type: string
+      example: This is dummy description.
+    created_at:
+      type: date
+      example: 2022-08-10 22:22:20
+    updated_at:
+      type: date
+      example: 2022-08-10 22:22:20
+
+MerchandiseInput:
+  type: object
+  properties:
+    universal_product_code:
+      type: string
+      example: "195697617089"
+    name: 
+      type: string
+      example: "HP 14 Series 14\" Touchscreen Laptop AMD Ryzen 3-3250U 8GB RAM 256GB SSD Natural Silver - AMD Ryzen 3-3250U Dual-core - Integrated AMD Radeon Graphics"
+    stock:
+      type: number
+      example: 12
+    price:
+      type: number
+      example: 12000000
+    description:
+      type: string
+      example: This is dummy description.
