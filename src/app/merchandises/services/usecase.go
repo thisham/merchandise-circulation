@@ -7,18 +7,21 @@ type merchandisesUsecase struct {
 }
 
 // CheckDataExistsByUPC implements merchandises.Services
-func (*merchandisesUsecase) CheckDataExistsByUPC(UPC string) (bool, error) {
-	panic("unimplemented")
+func (merch *merchandisesUsecase) CheckDataExistsByUPC(UPC string) (bool, error) {
+	result, err := merch.merchandiseData.CheckDataExistsByUPC(UPC)
+	return result, err
 }
 
 // DeleteDataByID implements merchandises.Services
 func (merch *merchandisesUsecase) DeleteDataByID(id string) error {
-	panic("unimplemented")
+	err := merch.merchandiseData.DeleteDataByID(id)
+	return err
 }
 
 // GetAllData implements merchandises.Services
 func (merch *merchandisesUsecase) GetAllData() ([]merchandises.Domain, error) {
-	panic("unimplemented")
+	result, err := merch.merchandiseData.SelectAllData()
+	return result, err
 }
 
 // GetDataByID implements merchandises.Services
