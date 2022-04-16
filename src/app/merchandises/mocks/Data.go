@@ -13,6 +13,41 @@ type Data struct {
 	mock.Mock
 }
 
+// CheckDataExistsByUPC provides a mock function with given fields: UPC
+func (_m *Data) CheckDataExistsByUPC(UPC string) (bool, error) {
+	ret := _m.Called(UPC)
+
+	var r0 bool
+	if rf, ok := ret.Get(0).(func(string) bool); ok {
+		r0 = rf(UPC)
+	} else {
+		r0 = ret.Get(0).(bool)
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(string) error); ok {
+		r1 = rf(UPC)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// DeleteDataByID provides a mock function with given fields: id
+func (_m *Data) DeleteDataByID(id string) error {
+	ret := _m.Called(id)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(string) error); ok {
+		r0 = rf(id)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 // InsertData provides a mock function with given fields: data
 func (_m *Data) InsertData(data merchandises.Domain) (merchandises.Domain, error) {
 	ret := _m.Called(data)
@@ -34,8 +69,8 @@ func (_m *Data) InsertData(data merchandises.Domain) (merchandises.Domain, error
 	return r0, r1
 }
 
-// SelectData provides a mock function with given fields:
-func (_m *Data) SelectData() []merchandises.Domain {
+// SelectAllData provides a mock function with given fields:
+func (_m *Data) SelectAllData() ([]merchandises.Domain, error) {
 	ret := _m.Called()
 
 	var r0 []merchandises.Domain
@@ -45,6 +80,69 @@ func (_m *Data) SelectData() []merchandises.Domain {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).([]merchandises.Domain)
 		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func() error); ok {
+		r1 = rf()
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// SelectDataByID provides a mock function with given fields: id
+func (_m *Data) SelectDataByID(id string) (merchandises.Domain, error) {
+	ret := _m.Called(id)
+
+	var r0 merchandises.Domain
+	if rf, ok := ret.Get(0).(func(string) merchandises.Domain); ok {
+		r0 = rf(id)
+	} else {
+		r0 = ret.Get(0).(merchandises.Domain)
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(string) error); ok {
+		r1 = rf(id)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// SelectDataByUPC provides a mock function with given fields: UPC
+func (_m *Data) SelectDataByUPC(UPC string) (merchandises.Domain, error) {
+	ret := _m.Called(UPC)
+
+	var r0 merchandises.Domain
+	if rf, ok := ret.Get(0).(func(string) merchandises.Domain); ok {
+		r0 = rf(UPC)
+	} else {
+		r0 = ret.Get(0).(merchandises.Domain)
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(string) error); ok {
+		r1 = rf(UPC)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// UpdateDataByID provides a mock function with given fields: id, data
+func (_m *Data) UpdateDataByID(id string, data merchandises.Domain) error {
+	ret := _m.Called(id, data)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(string, merchandises.Domain) error); ok {
+		r0 = rf(id, data)
+	} else {
+		r0 = ret.Error(0)
 	}
 
 	return r0
