@@ -25,10 +25,20 @@ type MerchandiseTypeReference struct {
 
 type Services interface {
 	CreateData(data Domain) (Domain, error)
-	GetAllData() []Domain
+	GetAllData() ([]Domain, error)
+	GetDataByID(id string) (Domain, error)
+	GetDataByUPC(UPC string) (Domain, error)
+	CheckDataExistsByUPC(UPC string) (bool, error)
+	UpdateDataByID(id string, data Domain) error
+	DeleteDataByID(id string) error
 }
 
 type Data interface {
 	InsertData(data Domain) (Domain, error)
-	SelectData() []Domain
+	SelectAllData() ([]Domain, error)
+	SelectDataByID(id string) (Domain, error)
+	SelectDataByUPC(UPC string) (Domain, error)
+	CheckDataExistsByUPC(UPC string) (bool, error)
+	UpdateDataByID(id string, data Domain) error
+	DeleteDataByID(id string) error
 }
