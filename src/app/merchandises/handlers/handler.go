@@ -26,7 +26,7 @@ func (merchHandler *MerchandiseHandler) CreateMerchandiseHandler(ectx echo.Conte
 
 	_, err := merchHandler.service.CreateData(newMerch.TranspileCreateRequestToDomain())
 	if err != nil {
-		return utils.CreateResponse(ectx, http.StatusInternalServerError, "bad request", err)
+		return utils.CreateResponse(ectx, http.StatusInternalServerError, "server error", err)
 	}
 
 	return utils.CreateResponse(ectx, http.StatusCreated, "data created", newMerch)
@@ -39,4 +39,49 @@ func (merchHandler *MerchandiseHandler) GetAllMerchandiseHandler(ectx echo.Conte
 		return utils.CreateResponse(ectx, http.StatusInternalServerError, "server error", err)
 	}
 	return utils.CreateResponse(ectx, http.StatusOK, "OK", data)
+}
+
+func (merchHandler *MerchandiseHandler) GetMerchandiseByID(ectx echo.Context) error {
+	merchID := ectx.Param("id")
+
+	result, err := merchHandler.service.GetDataByID(merchID)
+	if err != nil {
+		return utils.CreateResponse(ectx, http.StatusInternalServerError, "server error", err)
+	}
+	return utils.CreateResponse(ectx, http.StatusOK, "OK", result)
+}
+
+func (merchHandler *MerchandiseHandler) GetMerchandiseByUPC(ectx echo.Context) error {
+	merchID := ectx.Param("upc")
+
+	result, err := merchHandler.service.GetDataByID(merchID)
+	if err != nil {
+		return utils.CreateResponse(ectx, http.StatusInternalServerError, "server error", err)
+	}
+	return utils.CreateResponse(ectx, http.StatusOK, "OK", result)
+}
+
+func (merchHandler *MerchandiseHandler) UpdateMerchandiseByID(ectx echo.Context) error {
+	merchID := ectx.Param("id")
+	merchData := request.UpdateMerchandiseRequest{
+		ID: merchID,
+	}
+
+	if err := ectx.Bind(&merchData); err != nil {
+		return utils.CreateResponse(ectx, http.StatusBadRequest, "bad request", err)
+	}
+
+	if err := merchHandler.service.UpdateDataByID(merchID, merchData.TranspileUpdateRequestToDomain()); err != nil {
+		return utils.CreateResponse(ectx, http.StatusInternalServerError, "server error", err)
+	}
+	return utils.CreateResponse(ectx, http.StatusNoContent, "no content")
+}
+
+func (merchHandler *MerchandiseHandler) DeleteMerchandiseByID(ectx echo.Context) error {
+	merchID := ectx.Param("id")
+
+	if err := merchHandler.service.DeleteDataByID(merchID); err != nil {
+		return utils.CreateResponse(ectx, http.StatusInternalServerError, "server error", err)
+	}
+	return utils.CreateResponse(ectx, http.StatusNoContent, "no content")
 }
