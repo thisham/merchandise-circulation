@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"merchandise-circulation-api/src/routes"
+)
 
 func main() {
-	fmt.Println("Hello world!")
+	api := routes.New()
+	api.Logger.Fatal(api.Start(":8000"))
 }
