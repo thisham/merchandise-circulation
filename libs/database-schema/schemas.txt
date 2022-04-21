@@ -1,0 +1,52 @@
+table merchandise_types {
+  id int [pk, increment]
+  name varchar(36)
+}
+
+table merchandises {
+  id uuid [pk]
+  merchandise_type_id int
+  universal_product_code varchar(12)
+  name varchar
+  stock int
+  price float
+  description text
+  created_at timestamp
+  updated_at timestamp
+}
+
+table transaction_merchandise_pivot {
+  merchandise_id uuid
+  transaction_id uuid
+  quantity int
+  price float
+}
+
+enum TransactionType {
+  arrival
+  pullout
+}
+
+table transactions {
+  id uuid [pk]
+  type TransactionType
+  total_quantity int
+  total_price float
+  created_at timestamp
+  updated_at timestamp
+}
+
+table users {
+  id uuid [pk]
+  name varchar(64)
+  email varchar(64)
+  password varchar(128)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: "transaction_merchandise_pivot"."merchandise_id" < "merchandises"."id"
+
+Ref: "transaction_merchandise_pivot"."transaction_id" < "transactions"."id"
+
+Ref: "merchandises"."merchandise_type_id" < "merchandise_types"."id"
