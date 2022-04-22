@@ -1,0 +1,29 @@
+User:
+  type: object
+  properties: 
+    id: 
+      type: string
+      example: abd121e8-dumm-dumm-user-dummycreated
+    name:
+      type: string
+      example: Yehezkiel Saragih
+    email:
+      type: string
+      example: yehezkielsr@example.com
+
+UserInput:
+  type: object
+  required: 
+    - name
+    - email
+    - password
+  properties: 
+    name:
+      type: string
+      example: Yehezkiel Saragih
+    email:
+      type: string
+      example: yehezkielsr@example.com 
+    password:
+      type: string
+      example: strongestpassword

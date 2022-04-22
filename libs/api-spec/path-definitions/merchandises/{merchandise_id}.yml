@@ -1,0 +1,10 @@
+get:
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: ../../schemas/Merchandise.yml#/Merchandise
+    '500':
+      description: Internal Server Error
