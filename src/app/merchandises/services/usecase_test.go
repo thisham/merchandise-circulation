@@ -73,14 +73,14 @@ func TestGetAMerchandiseByUPC(t *testing.T) {
 	})
 
 	t.Run("can not connect to database", func(t *testing.T) {
-		mockData.On("SelectAllMerchandises").Return(merchandises.Domain{}, errors.New("cannot connect db")).Once()
+		mockData.On("SelectMerchandiseByUPC", entityDomain.UPC).Return(merchandises.Domain{}, errors.New("cannot connect db")).Once()
 		_, err := entityService.GetMerchandiseByUPC(entityDomain.UPC)
 
 		assert.NotNil(t, err)
 	})
 
 	t.Run("data not found", func(t *testing.T) {
-		mockData.On("SelectAllMerchandises").Return(merchandises.Domain{}, errors.New("data not found")).Once()
+		mockData.On("SelectMerchandiseByUPC", entityDomain.UPC).Return(merchandises.Domain{}, errors.New("data not found")).Once()
 		_, err := entityService.GetMerchandiseByUPC(entityDomain.UPC)
 
 		assert.NotNil(t, err)
