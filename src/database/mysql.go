@@ -1,6 +1,8 @@
 package database
 
 import (
+	mercTypeData "merchandise-circulation-api/src/app/merchandise_types/data"
+	mercData "merchandise-circulation-api/src/app/merchandises/data"
 	"merchandise-circulation-api/src/configs"
 
 	"gorm.io/driver/mysql"
@@ -18,4 +20,14 @@ func InitDB() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func Migrate() {
+	InitDB()
+	DB.AutoMigrate(mercData.Merchandise{}, mercTypeData.MerchandiseType{})
+}
+
+func Demigrate() {
+	InitDB()
+	DB.Migrator().DropTable(mercData.Merchandise{}, mercTypeData.MerchandiseType{})
 }
