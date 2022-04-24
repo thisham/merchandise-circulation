@@ -28,7 +28,7 @@ func TestMain(m *testing.M) {
 
 func TestGetAllMerchandiseTypes(t *testing.T) {
 	t.Run("success all got data", func(t *testing.T) {
-		mockData.On("SelectAllMerchandiseTypes").Return(entityDomain, nil).Once()
+		mockData.On("SelectAllMerchandiseTypes").Return([]merchandise_types.Domain{entityDomain}, nil).Once()
 		result, err := entityService.GetAllMerchandiseTypes()
 
 		assert.Nil(t, err)
@@ -36,14 +36,14 @@ func TestGetAllMerchandiseTypes(t *testing.T) {
 	})
 
 	t.Run("can not connect to database", func(t *testing.T) {
-		mockData.On("SelectAllMerchandises").Return([]merchandise_types.Domain{}, errors.New("cannot connect db")).Once()
+		mockData.On("SelectAllMerchandiseTypes").Return([]merchandise_types.Domain{}, errors.New("cannot connect db")).Once()
 		_, err := entityService.GetAllMerchandiseTypes()
 
 		assert.NotNil(t, err)
 	})
 
 	t.Run("fetched empty data", func(t *testing.T) {
-		mockData.On("SelectAllMerchandises").Return([]merchandise_types.Domain{}, nil).Once()
+		mockData.On("SelectAllMerchandiseTypes").Return([]merchandise_types.Domain{}, nil).Once()
 		result, err := entityService.GetAllMerchandiseTypes()
 
 		assert.Nil(t, err)
