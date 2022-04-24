@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"merchandise-circulation-api/src/database"
 	"merchandise-circulation-api/src/routes"
 	"net/http/httptest"
 	"testing"
@@ -19,9 +20,9 @@ func init() {
 	server = httptest.NewServer(echoHandler)
 }
 
-func TearDown() func() error {
-	return func() error {
-		return nil
+func TearDown() func() {
+	return func() {
+		database.DB.Exec("TRUNCATE TABLE merchandises.merchandises;")
 	}
 }
 
