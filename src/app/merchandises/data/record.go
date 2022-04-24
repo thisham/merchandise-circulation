@@ -52,3 +52,12 @@ func mapToDomain(record Merchandise) merchandises.Domain {
 		UpdatedAt: record.Model.UpdatedAt,
 	}
 }
+
+func mapToBatchDomain(records []Merchandise) []merchandises.Domain {
+	domain := []merchandises.Domain{}
+
+	for _, rec := range records {
+		domain = append(domain, mapToDomain(rec))
+	}
+	return domain
+}
