@@ -6,25 +6,25 @@ import (
 	"gorm.io/gorm"
 )
 
-type Record struct {
+type record struct {
 	DB *gorm.DB
 }
 
 // CheckMerchandiseExistsByUPC implements merchandises.Data
-func (*Record) CheckMerchandiseExistsByUPC(upc string) bool {
+func (*record) CheckMerchandiseExistsByUPC(upc string) bool {
 	panic("unimplemented")
 }
 
 // SelectAllMerchandises implements merchandises.Data
-func (*Record) SelectAllMerchandises() ([]merchandises.Domain, error) {
+func (*record) SelectAllMerchandises() ([]merchandises.Domain, error) {
 	panic("unimplemented")
 }
 
 // SelectMerchandiseByUPC implements merchandises.Data
-func (*Record) SelectMerchandiseByUPC(upc string) (merchandises.Domain, error) {
+func (*record) SelectMerchandiseByUPC(upc string) (merchandises.Domain, error) {
 	panic("unimplemented")
 }
 
 func NewMySqlRecord(DB *gorm.DB) merchandises.Data {
-	return &Record{DB}
+	return &record{DB}
 }
