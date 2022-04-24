@@ -14,14 +14,16 @@ type Data struct {
 }
 
 // SelectAllMerchandiseTypes provides a mock function with given fields:
-func (_m *Data) SelectAllMerchandiseTypes() (merchandise_types.Domain, error) {
+func (_m *Data) SelectAllMerchandiseTypes() ([]merchandise_types.Domain, error) {
 	ret := _m.Called()
 
-	var r0 merchandise_types.Domain
-	if rf, ok := ret.Get(0).(func() merchandise_types.Domain); ok {
+	var r0 []merchandise_types.Domain
+	if rf, ok := ret.Get(0).(func() []merchandise_types.Domain); ok {
 		r0 = rf()
 	} else {
-		r0 = ret.Get(0).(merchandise_types.Domain)
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]merchandise_types.Domain)
+		}
 	}
 
 	var r1 error

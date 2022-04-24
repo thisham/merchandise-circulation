@@ -12,5 +12,5 @@ type Services interface {
 
 // main clauses: INSERT, SELECT, UPDATE, DELETE
 type Data interface {
-	SelectAllMerchandiseTypes() (Domain, error)
+	SelectAllMerchandiseTypes() ([]Domain, error)
 }

@@ -11,8 +11,10 @@ type record struct {
 }
 
 // SelectAllMerchandiseTypes implements merchandise_types.Data
-func (*record) SelectAllMerchandiseTypes() (merchandise_types.Domain, error) {
-	panic("unimplemented")
+func (rec *record) SelectAllMerchandiseTypes() ([]merchandise_types.Domain, error) {
+	var data []MerchandiseType
+	var err = rec.DB.Find(&data).Error
+	return mapToBatchDomain(data), err
 }
 
 func NewMySqlRecord(DB *gorm.DB) merchandise_types.Data {
