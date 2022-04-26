@@ -7,13 +7,17 @@ import (
 	"merchandise-circulation-api/src/routes"
 )
 
+var srv configs.ServerConfig
+
 func init() {
-	database.Migrate()
+	srv, _ = configs.LoadServerConfig(".")
+	var DB *database.DBConf
+	DB.InitDB().Migrate()
 }
 
 func main() {
-	c, _ := configs.LoadServerConfig(".")
 	api := routes.New()
-	server := fmt.Sprintf("%v:%v", c.ServerHost, c.ServerPort)
-	api.Logger.Fatal(api.Start(server))
+	api.Logger.Fatal(api.Start(fmt.Sprintf(
+		"%v:%v", srv.ServerHost, srv.ServerPort,
+	)))
 }

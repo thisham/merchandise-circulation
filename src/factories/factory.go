@@ -19,14 +19,16 @@ type handlers struct {
 	MerchandiseTypeHandler merchTypeHandler.MerchandiseTypeHandler
 }
 
+var conn database.DBConf
+
 func merchandiseFactory() merchHandler.MerchandiseHandler {
-	data := merchData.NewMySqlRecord(database.DB)
+	data := merchData.NewMySqlRecord(conn.DB)
 	services := merchServices.NewService(data)
 	return *merchHandler.NewHandler(services)
 }
 
 func merchandiseTypeFactory() merchTypeHandler.MerchandiseTypeHandler {
-	data := merchTypeData.NewMySqlRecord(database.DB)
+	data := merchTypeData.NewMySqlRecord(conn.DB)
 	services := merchTypeServices.NewService(data)
 	return *merchTypeHandler.NewHandler(services)
 }

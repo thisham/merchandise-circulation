@@ -9,25 +9,21 @@ import (
 	"gorm.io/gorm"
 )
 
-var DB *gorm.DB
+// var DB *gorm.DB
+type DBConf struct{ *gorm.DB }
 
-func InitDB() {
+func (DB *DBConf) InitDB() *DBConf {
 	config, _ := configs.LoadServerConfig(".")
 	dsn := config.ConnectionString
 
-	var err error
-	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		panic(err)
-	}
+	conn, _ := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	return &DBConf{conn}
 }
 
-func Migrate() {
-	InitDB()
-	DB.AutoMigrate(mercData.Merchandise{}, mercTypeData.MerchandiseType{})
+func (DB *DBConf) Migrate() {
+	DB.AutoMigrate(&mercData.Merchandise{}, &mercTypeData.MerchandiseType{})
 }
 
-func Demigrate() {
-	InitDB()
-	DB.Migrator().DropTable(mercData.Merchandise{}, mercTypeData.MerchandiseType{})
+func (DB *DBConf) Demigrate() {
+	DB.Migrator().DropTable(&mercData.Merchandise{}, &mercTypeData.MerchandiseType{})
 }
