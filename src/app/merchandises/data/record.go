@@ -13,7 +13,7 @@ import (
 type Merchandise struct {
 	gorm.Model
 	ID                uuid.UUID
-	UPC               string `gorm:"index:unique"`
+	UPC               string `gorm:"index:merchandise_upc,unique;not null"`
 	Name              string
 	Stock             int
 	Price             float64
