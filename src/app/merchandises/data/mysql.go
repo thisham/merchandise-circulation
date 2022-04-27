@@ -21,17 +21,17 @@ func (rec *record) CheckMerchandiseExistsByUPC(upc string) bool {
 }
 
 // SelectAllMerchandises implements merchandises.Data
-func (rec *record) SelectAllMerchandises() ([]merchandises.Domain, error) {
-	var data []Merchandise
+func (rec record) SelectAllMerchandises() ([]merchandises.Domain, error) {
+	var merchs []Merchandise
 
-	if err := rec.DB.Find(&data).Error; err != nil {
-		return []merchandises.Domain{}, nil
+	if err := rec.DB.Find(&merchs).Error; err != nil {
+		return []merchandises.Domain{}, err
 	}
-	return mapToBatchDomain(data), nil
+	return mapToBatchDomain(merchs), nil
 }
 
 // SelectMerchandiseByUPC implements merchandises.Data
-func (rec *record) SelectMerchandiseByUPC(upc string) (merchandises.Domain, error) {
+func (rec record) SelectMerchandiseByUPC(upc string) (merchandises.Domain, error) {
 	var foundData Merchandise
 	err := rec.DB.Where("UPC = ?", upc).Find(&foundData).Error
 	nullishUuid, _ := uuid.Parse("0")

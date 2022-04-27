@@ -13,12 +13,12 @@ import (
 type Merchandise struct {
 	gorm.Model
 	ID                uuid.UUID
-	UPC               string `gorm:"index:merchandise_upc,unique;not null"`
-	Name              string
+	UPC               string `gorm:"unique;not null;type:varchar(32)"`
+	Name              string `gorm:"unique;not null;type:varchar(100)"`
 	Stock             int
 	Price             float64
 	Description       string `gorm:"type:text"`
-	MerchandiseTypeID int
+	MerchandiseTypeID int    `gorm:"not null"`
 	MerchandiseType   data.MerchandiseType
 }
 
