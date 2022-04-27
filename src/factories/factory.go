@@ -12,6 +12,8 @@ import (
 	merchTypeData "merchandise-circulation-api/src/app/merchandise_types/data"
 	merchTypeHandler "merchandise-circulation-api/src/app/merchandise_types/handlers"
 	merchTypeServices "merchandise-circulation-api/src/app/merchandise_types/services"
+
+	"gorm.io/gorm"
 )
 
 type handlers struct {
@@ -19,23 +21,23 @@ type handlers struct {
 	MerchandiseTypeHandler merchTypeHandler.MerchandiseTypeHandler
 }
 
-var conn database.DBConf
-
-func merchandiseFactory() merchHandler.MerchandiseHandler {
-	data := merchData.NewMySqlRecord(conn.DB)
+func merchandiseFactory(conn *gorm.DB) merchHandler.MerchandiseHandler {
+	data := merchData.NewMySqlRecord(conn)
 	services := merchServices.NewService(data)
 	return *merchHandler.NewHandler(services)
 }
 
-func merchandiseTypeFactory() merchTypeHandler.MerchandiseTypeHandler {
-	data := merchTypeData.NewMySqlRecord(conn.DB)
+func merchandiseTypeFactory(conn *gorm.DB) merchTypeHandler.MerchandiseTypeHandler {
+	data := merchTypeData.NewMySqlRecord(conn)
 	services := merchTypeServices.NewService(data)
 	return *merchTypeHandler.NewHandler(services)
 }
 
 func Init() handlers {
+	conn := new(database.DBConf).InitDB()
+
 	return handlers{
-		MerchandiseHandler:     merchandiseFactory(),
-		MerchandiseTypeHandler: merchandiseTypeFactory(),
+		MerchandiseHandler:     merchandiseFactory(conn.DB),
+		MerchandiseTypeHandler: merchandiseTypeFactory(conn.DB),
 	}
 }
