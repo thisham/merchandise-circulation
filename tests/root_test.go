@@ -6,7 +6,7 @@ import (
 )
 
 func TestGetDefaultServerStatusResponse(t *testing.T) {
-	defer TearDown()
+	// var test TestSuite
 	route := GetHttpExpect(t)
 
 	result := route.GET("/").Expect().Status(http.StatusOK)
