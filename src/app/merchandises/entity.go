@@ -1,7 +1,6 @@
 package merchandises
 
 import (
-	"merchandise-circulation-api/src/app/merchandise_types"
 	"time"
 
 	"github.com/google/uuid"
@@ -9,7 +8,7 @@ import (
 
 type Domain struct {
 	ID              uuid.UUID
-	MerchandiseType merchandise_types.Domain
+	MerchandiseType MerchandiseTypeReference
 	UPC             string
 	Name            string
 	Stock           int
@@ -17,6 +16,11 @@ type Domain struct {
 	Description     string
 	CreatedAt       time.Time
 	UpdatedAt       time.Time
+}
+
+type MerchandiseTypeReference struct {
+	ID   int
+	Name string
 }
 
 // main clauses: GET, CREATE, AMEND, REMOVE

@@ -1,8 +1,6 @@
 package data
 
 import (
-	"merchandise-circulation-api/src/app/merchandise_types"
-	"merchandise-circulation-api/src/app/merchandise_types/data"
 	"merchandise-circulation-api/src/app/merchandises"
 
 	"github.com/google/uuid"
@@ -19,22 +17,12 @@ type Merchandise struct {
 	Price             float64
 	Description       string `gorm:"type:text"`
 	MerchandiseTypeID int    `gorm:"not null"`
-	MerchandiseType   data.MerchandiseType
+	MerchandiseType   MerchandiseType
 }
 
-func mapToRecord(domain merchandises.Domain) Merchandise {
-	return Merchandise{
-		ID:                domain.ID,
-		UPC:               domain.UPC,
-		Name:              domain.Name,
-		Stock:             domain.Stock,
-		Price:             domain.Price,
-		Description:       domain.Description,
-		MerchandiseTypeID: domain.MerchandiseType.ID,
-		MerchandiseType: data.MerchandiseType{
-			ID: domain.MerchandiseType.ID, Name: domain.MerchandiseType.Name,
-		},
-	}
+type MerchandiseType struct {
+	ID   int
+	Name string
 }
 
 func mapToDomain(record Merchandise) merchandises.Domain {
@@ -45,7 +33,7 @@ func mapToDomain(record Merchandise) merchandises.Domain {
 		Stock:       record.Stock,
 		Price:       record.Price,
 		Description: record.Description,
-		MerchandiseType: merchandise_types.Domain{
+		MerchandiseType: merchandises.MerchandiseTypeReference{
 			ID: record.MerchandiseType.ID, Name: record.MerchandiseType.Name,
 		},
 		CreatedAt: record.Model.CreatedAt,

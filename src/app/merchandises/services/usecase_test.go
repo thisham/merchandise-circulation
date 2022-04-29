@@ -2,7 +2,6 @@ package services_test
 
 import (
 	"errors"
-	"merchandise-circulation-api/src/app/merchandise_types"
 	"merchandise-circulation-api/src/app/merchandises"
 	"merchandise-circulation-api/src/app/merchandises/mocks"
 	"merchandise-circulation-api/src/app/merchandises/services"
@@ -29,7 +28,7 @@ func TestMain(m *testing.M) {
 		Price:       12000,
 		Stock:       12,
 		Description: "Testing merchandise.",
-		MerchandiseType: merchandise_types.Domain{
+		MerchandiseType: merchandises.MerchandiseTypeReference{
 			ID: 1, Name: "ATK",
 		},
 		CreatedAt: time.Now(),
