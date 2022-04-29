@@ -11,8 +11,7 @@ var srv configs.ServerConfig
 
 func init() {
 	srv, _ = configs.LoadServerConfig(".")
-	var DB *database.DBConf
-	DB.InitDB().Migrate()
+	new(database.DBConf).InitDB().Migrate()
 }
 
 func main() {
