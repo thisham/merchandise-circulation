@@ -2,6 +2,7 @@ package routes
 
 import (
 	"merchandise-circulation-api/src/factories"
+	"merchandise-circulation-api/src/middlewares"
 
 	"github.com/labstack/echo/v4"
 )
@@ -29,7 +30,7 @@ func New() *echo.Echo {
 	// auth
 	route.POST("/login", handlers.UserHandler.LoginHandler)
 	route.POST("/register", handlers.UserHandler.RegisterHandler)
-	route.GET("/logout", handlers.UserHandler.LogoutHandler)
+	route.GET("/logout", handlers.UserHandler.LogoutHandler, middlewares.VerifyAuthentication())
 
 	return route
 }
