@@ -7,22 +7,22 @@ type usecase struct {
 }
 
 // AttemptLogin implements users.Services
-func (*usecase) AttemptLogin(email string, password string) (jwt string, err error) {
+func (uc *usecase) AttemptLogin(email string, password string) (jwt string, err error) {
 	panic("unimplemented")
 }
 
 // AttemptRegister implements users.Services
-func (*usecase) AttemptRegister(user users.Domain) (jwt string, err error) {
+func (uc *usecase) AttemptRegister(user users.Domain) (jwt string, err error) {
 	panic("unimplemented")
 }
 
 // GetAllUsers implements users.Services
-func (*usecase) GetAllUsers() (users []users.Domain, err error) {
+func (uc *usecase) GetAllUsers() (users []users.Domain, err error) {
 	panic("unimplemented")
 }
 
 // GetUserByID implements users.Services
-func (*usecase) GetUserByID(id string) (user users.Domain, err error) {
+func (uc *usecase) GetUserByID(id string) (user users.Domain, err error) {
 	panic("unimplemented")
 }
 
