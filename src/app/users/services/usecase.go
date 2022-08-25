@@ -1,18 +1,20 @@
 package services
 
-import "merchandise-circulation-api/src/app/users"
+import (
+	"merchandise-circulation-api/src/app/users"
+)
 
 type usecase struct {
 	repo users.Repositories
 }
 
 // AttemptLogin implements users.Services
-func (uc *usecase) AttemptLogin(email string, password string) (jwt string, err error) {
+func (uc *usecase) AttemptLogin(email string, password string) (token string, err error) {
 	panic("unimplemented")
 }
 
 // AttemptRegister implements users.Services
-func (uc *usecase) AttemptRegister(user users.Domain) (jwt string, err error) {
+func (uc *usecase) AttemptRegister(user users.Domain) (token string, err error) {
 	panic("unimplemented")
 }
 

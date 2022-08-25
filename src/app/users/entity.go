@@ -18,8 +18,8 @@ type Domain struct {
 
 // Abstractions
 type Services interface {
-	AttemptLogin(email, password string) (jwt string, err error)
-	AttemptRegister(user Domain) (jwt string, err error)
+	AttemptLogin(email, password string) (token string, err error)
+	AttemptRegister(user Domain) (token string, err error)
 	GetAllUsers() (users []Domain, err error)
 	GetUserByID(id string) (user Domain, err error)
 }
