@@ -11,6 +11,11 @@ servers:
     description: Example Mock Server
   - url: http://localhost:4010
     description: Local Mock Server by Prism
+tags:
+  - name: Authentication
+  - name: Merchandises
+  - name: Transactions
+  - name: Users
 paths:
   /users:
     $ref: 'path-definitions/users/index.yml'

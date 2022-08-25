@@ -1,4 +1,5 @@
 get:
+  tags: [Users]
   responses:
     '200':
       description: OK
@@ -14,6 +15,7 @@ get:
       description: Server Error
 
 post:
+  tags: [Users]
   requestBody:
     required: true
     content:

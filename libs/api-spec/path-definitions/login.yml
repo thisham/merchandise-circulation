@@ -1,17 +1,18 @@
 post:
-  parameters:
-    - in: body
-      name: email
-      required: true
-      schema: 
-        type: string
-        example: yehezkielsr@example.com
-    - in: body
-      name: password
-      required: true
-      schema: 
-        type: string
-        example: example123!
+  tags: [Authentication]
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              example: yehezkielsr@example.com
+            password: 
+              type: string
+              example: example123!
   responses:
     '200': 
       description: OK

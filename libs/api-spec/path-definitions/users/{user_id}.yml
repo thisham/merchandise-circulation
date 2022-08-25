@@ -1,4 +1,5 @@
 get:
+  tags: [Users]
   responses:
     '200':
       description: OK
@@ -16,6 +17,7 @@ get:
       description: Internal Server Error
 
 put:
+  tags: [Users]
   requestBody:
     required: true
     content:
@@ -35,6 +37,7 @@ put:
       description: Server Error
 
 delete:
+  tags: [Users]
   responses:
     '204':
       description: No Content
