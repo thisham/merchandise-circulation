@@ -56,14 +56,14 @@ func (_m *Repositories) SelectUserByID(id string) (users.Domain, error) {
 }
 
 // SelectUserOnLogin provides a mock function with given fields: email
-func (_m *Repositories) SelectUserOnLogin(email string) (string, error) {
+func (_m *Repositories) SelectUserOnLogin(email string) (users.Domain, error) {
 	ret := _m.Called(email)
 
-	var r0 string
-	if rf, ok := ret.Get(0).(func(string) string); ok {
+	var r0 users.Domain
+	if rf, ok := ret.Get(0).(func(string) users.Domain); ok {
 		r0 = rf(email)
 	} else {
-		r0 = ret.Get(0).(string)
+		r0 = ret.Get(0).(users.Domain)
 	}
 
 	var r1 error
