@@ -1,6 +1,10 @@
 openapi: '3.0.2'
 info:
-  title: GORM MVC API
+  title: Merchandise API
+  contact:
+    name: Hamdan Yuwafi
+    email: yuwafi.hamdan365@gmail.com
+  description: CRUD of Merchandise, featured by Authentication
   version: '1.0'
 servers:
   - url: https://api.server.test/v1
