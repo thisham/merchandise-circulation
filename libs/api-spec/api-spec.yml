@@ -1,12 +1,21 @@
 openapi: '3.0.2'
 info:
-  title: GORM MVC API
+  title: Merchandise API
+  contact:
+    name: Hamdan Yuwafi
+    email: yuwafi.hamdan365@gmail.com
+  description: CRUD of Merchandise, featured by Authentication
   version: '1.0'
 servers:
   - url: https://api.server.test/v1
     description: Example Mock Server
   - url: http://localhost:4010
     description: Local Mock Server by Prism
+tags:
+  - name: Authentication
+  - name: Merchandises
+  - name: Transactions
+  - name: Users
 paths:
   /users:
     $ref: 'path-definitions/users/index.yml'

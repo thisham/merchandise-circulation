@@ -3,6 +3,7 @@ package database
 import (
 	mercTypeData "merchandise-circulation-api/src/app/merchandise_types/data"
 	mercData "merchandise-circulation-api/src/app/merchandises/data"
+	userData "merchandise-circulation-api/src/app/users/repositories"
 	"merchandise-circulation-api/src/configs"
 
 	"gorm.io/driver/mysql"
@@ -21,9 +22,11 @@ func (DB *DBConf) InitDB() *DBConf {
 }
 
 func (DB *DBConf) Migrate() {
-	DB.AutoMigrate(&mercData.Merchandise{}, &mercTypeData.MerchandiseType{})
+	DB.AutoMigrate(&mercData.Merchandise{}, &mercTypeData.MerchandiseType{},
+		&userData.User{})
 }
 
 func (DB *DBConf) Demigrate() {
-	DB.Migrator().DropTable(&mercData.Merchandise{}, &mercTypeData.MerchandiseType{})
+	DB.Migrator().DropTable(&mercData.Merchandise{},
+		&mercTypeData.MerchandiseType{}, &userData.User{})
 }

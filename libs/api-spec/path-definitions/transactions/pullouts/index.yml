@@ -1,4 +1,5 @@
 get:
+  tags: [Transactions]
   responses:
     '200':
       description: OK
@@ -14,6 +15,7 @@ get:
       description: Internal Server Error
 
 post:
+  tags: [Transactions]
   requestBody:
     required: true
     content:
