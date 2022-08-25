@@ -22,7 +22,7 @@ func (uc *usecase) AttemptLogin(email string, password string) (token string, er
 	}
 
 	if !utils.HashValidate(password, domain.Password) {
-		return "", errors.New("password didn't match")
+		return "", errors.New("password mismatch")
 	}
 	return utils.GenerateJwt(domain.ID.String())
 }

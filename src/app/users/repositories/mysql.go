@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"merchandise-circulation-api/src/app/users"
+	"merchandise-circulation-api/src/utils"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
@@ -16,6 +17,8 @@ func (repo *repository) InsertUser(user users.Domain) (
 	userID string, err error) {
 	record := mapToRecord(user)
 	record.ID = uuid.Must(uuid.NewRandom())
+	record.Password, _ = utils.HashMake(user.Password)
+
 	if err := repo.db.Create(&record).Error; err != nil {
 		return "", err
 	}
