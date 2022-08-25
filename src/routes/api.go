@@ -22,5 +22,14 @@ func New() *echo.Echo {
 	// merchandise types
 	route.GET("/merchandise_types", handlers.MerchandiseTypeHandler.GetAllMerchandiseTypesHandler)
 
+	// users
+	route.GET("/users", handlers.UserHandler.GetAllUsersHandler)
+	route.GET("/users/:id", handlers.UserHandler.GetUserByIDHandler)
+
+	// auth
+	route.POST("/login", handlers.UserHandler.LoginHandler)
+	route.POST("/register", handlers.UserHandler.RegisterHandler)
+	route.GET("/logout", handlers.UserHandler.LogoutHandler)
+
 	return route
 }
