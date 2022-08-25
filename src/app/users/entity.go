@@ -25,7 +25,7 @@ type Services interface {
 }
 
 type Repositories interface {
-	SelectUserOnLogin(email string) (hashedPassword string, err error)
+	SelectUserOnLogin(email string) (domain Domain, err error)
 	SelectUserByID(id string) (user Domain, err error)
 	SelectUsers() (users []Domain, err error)
 	InsertUser(user Domain) (userID string, err error)
