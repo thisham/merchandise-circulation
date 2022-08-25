@@ -12,18 +12,20 @@ type repository struct {
 }
 
 // InsertUser implements users.Repositories
-func (repo *repository) InsertUser(user users.Domain) (userID string, err error) {
+func (repo *repository) InsertUser(user users.Domain) (
+	userID string, err error) {
 	record := mapToRecord(user)
 
 	if err := repo.db.Create(&record).Error; err != nil {
-		return uuid.Nil.String(), err
+		return "", err
 	}
 
 	return record.ID.String(), nil
 }
 
 // SelectUserByID implements users.Repositories
-func (repo *repository) SelectUserByID(id string) (user users.Domain, err error) {
+func (repo *repository) SelectUserByID(id string) (
+	user users.Domain, err error) {
 	var record User
 
 	if err = repo.db.First(&record, id).Error; record.ID == uuid.Nil {
@@ -33,10 +35,11 @@ func (repo *repository) SelectUserByID(id string) (user users.Domain, err error)
 }
 
 // SelectUserOnLogin implements users.Repositories
-func (repo *repository) SelectUserOnLogin(email string) (hashedPassword string, err error) {
+func (repo *repository) SelectUserOnLogin(email string) (
+	domain users.Domain, err error) {
 	var record User
 	err = repo.db.First(&record, email).Error
-	return record.Password, err
+	return record.mapToDomain(), err
 }
 
 // SelectUsers implements users.Repositories
