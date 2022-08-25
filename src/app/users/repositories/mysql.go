@@ -31,7 +31,8 @@ func (repo *repository) SelectUserByID(id string) (
 	user users.Domain, err error) {
 	var record User
 
-	if err = repo.db.First(&record, id).Error; record.ID == uuid.Nil {
+	if err = repo.db.Where("ID", id).First(&record).Error; record.ID ==
+		uuid.Nil {
 		return users.Domain{}, err
 	}
 	return record.mapToDomain(), nil
