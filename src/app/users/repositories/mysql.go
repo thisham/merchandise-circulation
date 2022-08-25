@@ -15,7 +15,7 @@ type repository struct {
 func (repo *repository) InsertUser(user users.Domain) (
 	userID string, err error) {
 	record := mapToRecord(user)
-
+	record.ID = uuid.Must(uuid.NewRandom())
 	if err := repo.db.Create(&record).Error; err != nil {
 		return "", err
 	}
@@ -38,7 +38,7 @@ func (repo *repository) SelectUserByID(id string) (
 func (repo *repository) SelectUserOnLogin(email string) (
 	domain users.Domain, err error) {
 	var record User
-	err = repo.db.First(&record, email).Error
+	err = repo.db.Where("email", email).First(&record).Error
 	return record.mapToDomain(), err
 }
 
