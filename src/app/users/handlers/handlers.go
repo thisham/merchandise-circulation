@@ -3,6 +3,7 @@ package handlers
 import (
 	"merchandise-circulation-api/src/app/users"
 	"merchandise-circulation-api/src/app/users/handlers/request"
+	"merchandise-circulation-api/src/app/users/handlers/response"
 	"merchandise-circulation-api/src/utils"
 	"net/http"
 	"strings"
@@ -24,7 +25,8 @@ func (handler *UserHandlers) GetAllUsersHandler(ectx echo.Context) error {
 	if err != nil {
 		return utils.CreateEchoErrorResponse(ectx, err)
 	}
-	return utils.CreateEchoResponse(ectx, http.StatusOK, "OK", data)
+	return utils.CreateEchoResponse(ectx, http.StatusOK, "OK",
+		response.MapToBatchResponse(data))
 }
 
 func (handler *UserHandlers) GetUserByIDHandler(ectx echo.Context) error {
@@ -34,14 +36,16 @@ func (handler *UserHandlers) GetUserByIDHandler(ectx echo.Context) error {
 	if err != nil {
 		return utils.CreateEchoErrorResponse(ectx, err)
 	}
-	return utils.CreateEchoResponse(ectx, http.StatusOK, "OK", data)
+	return utils.CreateEchoResponse(ectx, http.StatusOK, "OK",
+		response.MapToResponse(data))
 }
 
 func (handler *UserHandlers) RegisterHandler(ectx echo.Context) error {
 	var userData request.RegisterRequest
 
 	if err := ectx.Bind(&userData); err != nil {
-		return utils.CreateEchoResponse(ectx, http.StatusBadRequest, "Bad Request")
+		return utils.CreateEchoResponse(ectx, http.StatusBadRequest, "Bad Request",
+			nil)
 	}
 
 	token, err := handler.service.AttemptRegister(userData.MapToDomain())
@@ -56,14 +60,15 @@ func (handler *UserHandlers) LoginHandler(ectx echo.Context) error {
 	var userData request.LoginRequest
 
 	if err := ectx.Bind(&userData); err != nil {
-		return utils.CreateEchoResponse(ectx, http.StatusBadRequest, "Bad Request")
+		return utils.CreateEchoResponse(ectx, http.StatusBadRequest, "Bad Request",
+			nil)
 	}
 
 	token, err := handler.service.AttemptLogin(userData.Email, userData.Password)
 	if err != nil {
 		if strings.Contains(err.Error(), "mismatch") {
 			return utils.CreateEchoResponse(ectx, http.StatusUnauthorized,
-				"Unauthorized")
+				"Unauthorized", nil)
 		}
 		return utils.CreateEchoErrorResponse(ectx, err)
 	}
@@ -73,5 +78,5 @@ func (handler *UserHandlers) LoginHandler(ectx echo.Context) error {
 
 func (handler *UserHandlers) LogoutHandler(ectx echo.Context) error {
 	utils.SetJwtCookie(ectx, "")
-	return utils.CreateEchoResponse(ectx, http.StatusOK, "OK")
+	return utils.CreateEchoResponse(ectx, http.StatusOK, "OK", nil)
 }

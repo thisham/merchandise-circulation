@@ -15,7 +15,7 @@ type base struct {
 	Data interface{} `json:"data"`
 }
 
-func CreateEchoResponse(ectx echo.Context, httpCode int, reason string, data ...interface{}) error {
+func CreateEchoResponse(ectx echo.Context, httpCode int, reason string, data interface{}) error {
 	response := base{}
 	response.Meta.Status = httpCode
 	response.Meta.Message = reason
@@ -25,7 +25,7 @@ func CreateEchoResponse(ectx echo.Context, httpCode int, reason string, data ...
 
 func CreateEchoErrorResponse(ectx echo.Context, err error) error {
 	if err.Error() == rescode.NotFound {
-		return CreateEchoResponse(ectx, http.StatusNotFound, err.Error())
+		return CreateEchoResponse(ectx, http.StatusNotFound, err.Error(), nil)
 	}
 	return CreateEchoResponse(ectx, http.StatusInternalServerError, "internal server error", err.Error())
 }
