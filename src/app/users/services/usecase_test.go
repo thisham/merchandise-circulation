@@ -60,10 +60,13 @@ func TestMain(m *testing.M) {
 }
 
 func TestAttemptLogin(t *testing.T) {
+	hashedPassphrase, _ := utils.HashMake(samplePassword)
+	sampleDomainHashedPassphrase := sampleDomain
+	sampleDomainHashedPassphrase.Password = hashedPassphrase
+
 	t.Run("should got auth token", func(t *testing.T) {
-		hashedPassphrase, _ := utils.HashMake(samplePassword)
-		mockRepo.On("SelectUserOnLogin", sampleEmail).Return(hashedPassphrase, nil).
-			Once()
+		mockRepo.On("SelectUserOnLogin", sampleEmail).
+			Return(sampleDomainHashedPassphrase, nil).Once()
 		token, err := services.AttemptLogin(sampleEmail, samplePassword)
 
 		assert.NotEqual(t, "", token)
@@ -71,9 +74,8 @@ func TestAttemptLogin(t *testing.T) {
 	})
 
 	t.Run("should got incorrect passphrase", func(t *testing.T) {
-		hashedPassphrase, _ := utils.HashMake(samplePassword)
-		mockRepo.On("SelectUserOnLogin", sampleEmail).Return(hashedPassphrase, nil).
-			Once()
+		mockRepo.On("SelectUserOnLogin", sampleEmail).
+			Return(sampleDomainHashedPassphrase, nil).Once()
 		token, err := services.AttemptLogin(sampleEmail, "anotherpasshrase")
 
 		assert.Equal(t, "", token)
@@ -82,7 +84,7 @@ func TestAttemptLogin(t *testing.T) {
 
 	t.Run("should got user not found", func(t *testing.T) {
 		mockRepo.On("SelectUserOnLogin", sampleEmail).
-			Return("", errors.New("record not found")).Once()
+			Return(users.Domain{}, errors.New("record not found")).Once()
 		token, err := services.AttemptLogin(sampleEmail, "anotherpasshrase")
 
 		assert.Equal(t, "", token)
@@ -93,9 +95,9 @@ func TestAttemptLogin(t *testing.T) {
 func TestAttemptRegister(t *testing.T) {
 	t.Run("should got registered", func(t *testing.T) {
 		mockRepo.On("SelectUserOnLogin", sampleDomainUnregistered.Email).
-			Return("", errors.New("record not found")).Once()
-		mockRepo.On("InsertUser", sampleDomainUnregistered).Return(sampleUUID, nil).
-			Once()
+			Return(users.Domain{}, errors.New("record not found")).Once()
+		mockRepo.On("InsertUser", sampleDomainUnregistered).
+			Return(sampleUUID.String(), nil).Once()
 		token, err := services.AttemptRegister(sampleDomainUnregistered)
 
 		assert.NotEqual(t, "", token)
@@ -103,12 +105,11 @@ func TestAttemptRegister(t *testing.T) {
 	})
 
 	t.Run("should got registered user error", func(t *testing.T) {
-		hashedPassphrase, _ := utils.HashMake(samplePassword)
-		mockRepo.On("SelectUserOnLogin", sampleDomainUnregistered.Email).
-			Return(hashedPassphrase, nil).Once()
+		mockRepo.On("SelectUserOnLogin", sampleDomain.Email).
+			Return(sampleDomain, nil).Once()
 		mockRepo.On("InsertUser", sampleDomainUnregistered).
-			Return("", errors.New("email was used")).Once()
-		token, err := services.AttemptRegister(sampleDomainUnregistered)
+			Return(sampleUUID.String(), nil).Once()
+		token, err := services.AttemptRegister(sampleDomain)
 
 		assert.Equal(t, "", token)
 		assert.NotNil(t, err)
@@ -116,17 +117,18 @@ func TestAttemptRegister(t *testing.T) {
 
 	t.Run("should got database error", func(t *testing.T) {
 		mockRepo.On("SelectUserOnLogin", sampleDomainUnregistered.Email).
-			Return("", errors.New("database error")).Once()
+			Return(users.Domain{}, errors.New("database error")).Once()
 		token, err := services.AttemptRegister(sampleDomainUnregistered)
 
 		assert.Equal(t, "", token)
 		assert.NotNil(t, err)
 	})
+
 }
 
 func TestGetAllUsers(t *testing.T) {
 	t.Run("should got all users", func(t *testing.T) {
-		mockRepo.On("SelectUsers").Return(sampleDomainList).Once()
+		mockRepo.On("SelectUsers").Return(sampleDomainList, nil).Once()
 		domains, err := services.GetAllUsers()
 
 		assert.NotNil(t, domains)
@@ -134,7 +136,7 @@ func TestGetAllUsers(t *testing.T) {
 	})
 
 	t.Run("should got database error", func(t *testing.T) {
-		mockRepo.On("SelectUsers").Return(sampleDomainList).Once()
+		mockRepo.On("SelectUsers").Return(nil, errors.New("database error")).Once()
 		domain, err := services.GetAllUsers()
 
 		assert.Nil(t, domain)
@@ -144,7 +146,7 @@ func TestGetAllUsers(t *testing.T) {
 
 func TestGetUserByID(t *testing.T) {
 	t.Run("should got selected user", func(t *testing.T) {
-		mockRepo.On("SelectUserByID", sampleUUID).Return(sampleDomain, nil).Once()
+		mockRepo.On("SelectUserByID", sampleUUID.String()).Return(sampleDomain, nil).Once()
 		domain, err := services.GetUserByID(sampleUUID.String())
 
 		assert.NotNil(t, domain)
@@ -152,20 +154,20 @@ func TestGetUserByID(t *testing.T) {
 	})
 
 	t.Run("should got user not found error", func(t *testing.T) {
-		mockRepo.On("SelectUserByID", sampleUUID).
+		mockRepo.On("SelectUserByID", sampleUUID.String()).
 			Return(users.Domain{}, errors.New("record not found")).Once()
 		domain, err := services.GetUserByID(sampleUUID.String())
 
-		assert.NotNil(t, domain)
-		assert.Nil(t, err)
+		assert.Equal(t, users.Domain{}, domain)
+		assert.NotNil(t, err)
 	})
 
 	t.Run("should got database error", func(t *testing.T) {
-		mockRepo.On("SelectUserByID", sampleUUID).
+		mockRepo.On("SelectUserByID", sampleUUID.String()).
 			Return(users.Domain{}, errors.New("database error")).Once()
 		domain, err := services.GetUserByID(sampleUUID.String())
 
-		assert.Nil(t, domain)
+		assert.Equal(t, users.Domain{}, domain)
 		assert.NotNil(t, err)
 	})
 }
