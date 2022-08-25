@@ -48,6 +48,7 @@ func (handler *UserHandlers) RegisterHandler(ectx echo.Context) error {
 	if err != nil {
 		return utils.CreateEchoErrorResponse(ectx, err)
 	}
+	utils.SetJwtCookie(ectx, token)
 	return utils.CreateEchoResponse(ectx, http.StatusCreated, "Created", token)
 }
 
@@ -66,5 +67,11 @@ func (handler *UserHandlers) LoginHandler(ectx echo.Context) error {
 		}
 		return utils.CreateEchoErrorResponse(ectx, err)
 	}
+	utils.SetJwtCookie(ectx, token)
 	return utils.CreateEchoResponse(ectx, http.StatusCreated, "Created", token)
+}
+
+func (handler *UserHandlers) LogoutHandler(ectx echo.Context) error {
+	utils.SetJwtCookie(ectx, "")
+	return utils.CreateEchoResponse(ectx, http.StatusOK, "OK")
 }
